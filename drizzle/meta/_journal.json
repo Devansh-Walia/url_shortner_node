@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1714330987053,
+      "tag": "0000_good_eternals",
+      "breakpoints": true
+    }
+  ]
+}
