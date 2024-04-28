@@ -2,7 +2,7 @@
   "name": "url_shortner_node",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "src/app.ts",
   "scripts": {
     "dev": "npx nodemon src/app.ts",
     "start": "tsc && node dist/app.js",
