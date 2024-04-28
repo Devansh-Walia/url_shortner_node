@@ -1,7 +1,7 @@
 import express from "express";
 import { nanoid } from "nanoid";
 
-import { validateUrl } from "../utils";
+import { formatResponse, validateUrl } from "../utils";
 import applicationConfig from "../../config";
 import { DrizzleUrlRepository } from "../repositories/url";
 
@@ -31,17 +31,17 @@ router.post("/short", async (req, res) => {
       });
 
       if (newUrl instanceof Error) {
-        res.status(500).json("Server Error");
+        res.status(500).json(formatResponse(500, "Server Error"));
         return;
       }
 
       res.status(200).json({ url: newUrl.shortUrl });
     } catch (err) {
       console.log(err);
-      res.status(500).json("Server Error");
+      res.status(500).json(formatResponse(500, "Server Error"));
     }
   } else {
-    res.status(400).json("Invalid Original Url");
+    res.status(400).json(formatResponse(400, "Invalid Original Url"));
   }
 });
 
@@ -50,21 +50,21 @@ router.get("/:urlId", async (req, res) => {
     const { urlId } = req.params;
 
     if (!urlId) {
-      res.status(400).json("Url Id is required");
+      res.status(400).json(formatResponse(400, "Url Id is required"));
       return;
     }
 
     const url = await repository.findByUrlId(urlId);
 
     if (!url) {
-      res.status(404).json("Url not found");
+      res.status(404).json(formatResponse(404, "Url not found"));
       return;
     }
 
     res.redirect(url.url);
   } catch (err) {
     console.log(err);
-    res.status(500).json("Server Error");
+    res.status(500).json(formatResponse(500, "Server Error"));
   }
 });
 
@@ -73,18 +73,16 @@ router.delete("/:urlId", async (req, res) => {
     const { urlId } = req.params;
 
     if (!urlId) {
-      res.status(400).json("Url Id is required");
+      res.status(400).json(formatResponse(400, "Url Id is required"));
       return;
     }
 
     const status = await repository.delete(urlId);
 
-    res.status(200).json({
-      message: status,
-    });
+    res.status(200).json(formatResponse(200, status));
   } catch (err) {
     console.log(err);
-    res.status(500).json("Server Error");
+    res.status(500).json(formatResponse(500, "Server Error"));
   }
 });
 

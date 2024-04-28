@@ -4,3 +4,10 @@ export const validateUrl = (value: string): boolean => {
 
   return urlRegex.test(value);
 };
+
+export const formatResponse = (status: number, message: string) => {
+  return {
+    status,
+    message,
+  };
+};

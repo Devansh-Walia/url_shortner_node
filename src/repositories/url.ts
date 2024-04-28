@@ -41,9 +41,7 @@ export class DrizzleUrlRepository implements UrlRepository {
     return urlData[0];
   }
   async delete(data: string): Promise<string> {
-    await this._repository
-      .delete(URLSchema)
-      .where(eq(URLSchema.id, Number(data)));
+    await this._repository.delete(URLSchema).where(eq(URLSchema.urlId, data));
     return "Deleted Successfully";
   }
 }
